@@ -7,41 +7,45 @@ gpupro::Program::Program()
 	m_id = glCreateProgram();
 }
 
-gpupro::Program::Program(Shader & _compShader) :
+gpupro::Program::Program(Shader & _compShader, TransformFeedback _feedback, std::initializer_list<std::string> _fbVaryings) :
 	Program()
 {
 	attach(_compShader);
+	applyFeedback(_feedback, _fbVaryings);
 	link();
 }
 
-gpupro::Program::Program(Shader & _vertShader, Shader & _fragShader) :
+gpupro::Program::Program(Shader & _vertShader, Shader & _fragShader, TransformFeedback _feedback, std::initializer_list<std::string> _fbVaryings) :
 	Program()
 {
 	attach(_vertShader);
 	attach(_fragShader);
+	applyFeedback(_feedback, _fbVaryings);
 	link();
 }
 
-gpupro::Program::Program(Shader & _vertShader, Shader & _geomShader, Shader & _fragShader) :
+gpupro::Program::Program(Shader & _vertShader, Shader & _geomShader, Shader & _fragShader, TransformFeedback _feedback, std::initializer_list<std::string> _fbVaryings) :
 	Program()
 {
 	attach(_vertShader);
 	attach(_geomShader);
 	attach(_fragShader);
+	applyFeedback(_feedback, _fbVaryings);
 	link();
 }
 
-gpupro::Program::Program(Shader & _vertShader, Shader & _tessEvaShader, Shader & _tessContrShader, Shader & _fragShader) :
+gpupro::Program::Program(Shader & _vertShader, Shader & _tessEvaShader, Shader & _tessContrShader, Shader & _fragShader, TransformFeedback _feedback, std::initializer_list<std::string> _fbVaryings) :
 	Program()
 {
 	attach(_vertShader);
 	attach(_tessEvaShader);
 	attach(_tessContrShader);
 	attach(_fragShader);
+	applyFeedback(_feedback, _fbVaryings);
 	link();
 }
 
-gpupro::Program::Program(Shader & _vertShader, Shader & _tessEvaShader, Shader & _tessContrShader, Shader & _geomShader, Shader & _fragShader) :
+gpupro::Program::Program(Shader & _vertShader, Shader & _tessEvaShader, Shader & _tessContrShader, Shader & _geomShader, Shader & _fragShader, TransformFeedback _feedback, std::initializer_list<std::string> _fbVaryings) :
 	Program()
 {
 	attach(_vertShader);
@@ -49,6 +53,7 @@ gpupro::Program::Program(Shader & _vertShader, Shader & _tessEvaShader, Shader &
 	attach(_tessContrShader);
 	attach(_geomShader);
 	attach(_fragShader);
+	applyFeedback(_feedback, _fbVaryings);
 	link();
 }
 
@@ -96,6 +101,20 @@ void gpupro::Program::link()
 	} else {
 		std::cerr << "INF: Successfully linked program " << m_id << "\n";
 	}
+}
+
+void gpupro::Program::applyFeedback(TransformFeedback _feedback, std::initializer_list<std::string> _fbVaryings) const
+{
+	if (_feedback == TransformFeedback::NONE)
+		return;
+	
+	std::vector<const GLchar*> varyingStrings;
+	varyingStrings.resize(_fbVaryings.size());
+	int i = 0;
+	for (auto& s : _fbVaryings)
+		varyingStrings[i++] = s.c_str();
+
+	glTransformFeedbackVaryings(m_id, GLsizei(_fbVaryings.size()), varyingStrings.data(), static_cast<GLenum>(_feedback));
 }
 
 void gpupro::Program::loadFromBinary(GLenum _binaryFormat, const std::vector<unsigned char>& _binary)
