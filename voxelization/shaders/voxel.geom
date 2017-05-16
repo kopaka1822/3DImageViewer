@@ -17,6 +17,7 @@ layout(binding = 0, std140) uniform ubo_transform
 {
 	mat4 u_viewProjection;
 	vec3 u_cameraPosition;
+	float u_discardThresh;
 };
 
 #define POSITIVE_THRESHOLD 0.0001
@@ -46,7 +47,7 @@ void main()
 	vec4 texel = texelFetch(tex_voxel, texCoord, 0);
 	out_color = texel;
 	
-	if( dot(texel.rgb, vec3(1.0)) < 0.01 )
+	if( dot(texel.rgb, vec3(0.299, 0.587, 0.114)) < u_discardThresh )
 		return;
 	
 	// Compute view direction to decide which faces are visible

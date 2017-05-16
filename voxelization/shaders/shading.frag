@@ -11,6 +11,7 @@ layout(binding = 0, std140) uniform ubo_transform
 {
 	mat4 u_viewProjection;
 	vec3 u_cameraPosition;
+	float u_discardThresh;
 };
 
 uniform vec3 LIGHT_DIR = vec3(0.267261242, 0.801783726, 0.534522484);

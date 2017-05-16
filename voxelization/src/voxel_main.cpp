@@ -16,6 +16,7 @@ struct TransformUniforms
 {
 	mat4 viewProjection;
 	vec3 cameraPosition;
+	float shadownTresh;
 };
 
 static vec3 s_camPos;
@@ -26,6 +27,7 @@ static bool s_aDown = false;
 static bool s_dDown = false;
 static bool s_spaceDown = false;
 static bool s_shiftDown = false;
+static float s_discardThresh = 0.01f;
 static void keyFunc(GLFWwindow * _window, int _key, int, int _action, int)
 {
 	if(_action == GLFW_PRESS)
@@ -39,6 +41,8 @@ static void keyFunc(GLFWwindow * _window, int _key, int, int _action, int)
 			case GLFW_KEY_D: s_dDown = true; break;
 			case GLFW_KEY_SPACE: s_spaceDown = true; break;
 			case GLFW_KEY_LEFT_SHIFT: s_shiftDown = true; break;
+			case GLFW_KEY_R: s_discardThresh = std::max(s_discardThresh - 0.01f, 0.0f); break;
+			case GLFW_KEY_T: s_discardThresh = std::min(s_discardThresh + 0.01f, 0.99f); break;
 		}
 	}
 	else if(_action == GLFW_RELEASE)
@@ -173,12 +177,15 @@ int main()
 			float(gliTex.extent().z) * 2.0f);
 		s_camDir = vec3(0.0f, 0.0f, -1.0f);
 		// Main loop
+		glClearColor(0.0f, 0.3f, 0.3375f, 1.0f);
+
 		while(window.isOpen())
 		{
 			auto time_start = std::chrono::high_resolution_clock::now();		
 			transformUniforms.viewProjection = glm::perspective(40.0f * 3.1415926f / 180.0f, 1.0f, 0.1f, 100.0f) * 
 				glm::lookAt(s_camPos, s_camPos + s_camDir, vec3(0.0f, 1.0f, 0.0f));
 			transformUniforms.cameraPosition = s_camPos;
+			transformUniforms.shadownTresh = s_discardThresh;
 			transformUBO.subDataUpdate(0, sizeof(TransformUniforms), &transformUniforms);
 
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -193,6 +200,8 @@ int main()
 			window.handleEventsAndPresent();	
 			auto time_end = std::chrono::high_resolution_clock::now();
 			tick(float(std::chrono::duration_cast<std::chrono::milliseconds>(time_end - time_start).count()) / 100.0f);
+
+			std::cerr << "discard threshold (R- T+): " << s_discardThresh << "        \r";
 		}
 	} catch(std::exception _ex) {
 		std::cerr << "ERR: " << _ex.what();
