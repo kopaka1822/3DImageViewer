@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="dependencies">
+      <UniqueIdentifier>{49768afb-2461-4b60-93a8-985dd3562416}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dependencies\glad">
+      <UniqueIdentifier>{97596d9f-7c9d-48c8-a6c5-df31aafe1fd0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\dependencies\glad\src\glad.c">
+      <Filter>dependencies\glad</Filter>
+    </ClCompile>
+    <ClCompile Include="..\framework\src\shader.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\framework\src\texture.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\framework\src\vertexformat.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\framework\src\buffer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\framework\src\context.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\framework\src\format.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\framework\src\model.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\framework\src\objloader.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\framework\src\pipeline.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\framework\src\program.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\framework\src\query.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\framework\src\framebuffer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\framework\include\texture.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\include\vertexformat.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\include\buffer.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\include\context.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\include\format.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\include\framebuffer.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\include\gl.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\include\gpuproframework.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\include\model.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\include\objloader.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\include\pipeline.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\include\program.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\include\query.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\include\shader.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

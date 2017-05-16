@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="shaders">
+      <UniqueIdentifier>{1e6ec6ae-3111-4810-81ff-e3bf9f95e5b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\filedialog">
+      <UniqueIdentifier>{21da5df6-59d5-41ff-a51c-3e8e09397a0e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\shared\demowindow.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\voxel_main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\filedialog\nfd_common.c">
+      <Filter>src\filedialog</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\filedialog\nfd_win.cpp">
+      <Filter>src\filedialog</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\DialogOpenFile.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\shared\demowindow.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\DialogOpenFile.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\shaders\simple.vert">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="..\shaders\voxel.geom">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="..\shaders\voxel.vert">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="..\shaders\voxelize.frag">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="..\shaders\shading.frag">
+      <Filter>shaders</Filter>
+    </None>
+  </ItemGroup>
+</Project>
