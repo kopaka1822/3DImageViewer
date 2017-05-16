@@ -1,0 +1,3 @@
+[submodule "dependencies/gli"]
+	path = dependencies/gli
+	url = https://github.com/g-truc/gli.git
