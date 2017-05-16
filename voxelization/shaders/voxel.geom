@@ -56,87 +56,35 @@ void main()
 	vec3 center = vec3(texCoord);
 	vec3 viewVec = center - u_cameraPosition;
 	
-	// left or right face	
-	int s = getOppositeSign(viewVec.x);		
-	if (s != 0) {
-		//uvec4 vs1 = texelFetch(tex_voxel, xy + ivec2(s,0), 0);
-		//if((z1Mask & vs1) == uvec4(0)) {
-			out_normal = vec3(s, 0.1, -0.1);
-			out_position = center + vec3(s * voxelSizeHalf.x,  voxelSizeHalf.y, -voxelSizeHalf.z);
+		
+	vec3 dir[3] = {vec3(1.0,0.0,0.0), vec3(0.0,1.0,0.0), vec3(0.0,0.0,1.0)};
+	for(int i = 0; i < 3; ++i)
+	{
+		int s = getOppositeSign(dot(viewVec,dir[i]));
+		vec3 a1 = dir[i].x == 0.0? vec3(1.0,0.0,0.0) : vec3(0.0,1.0,0.0);
+		vec3 a2 = vec3(1.0) - dir[i] - a1;
+		
+		if (s != 0) {	
+			out_normal = dir[i] * s + 0.1 * a1 - 0.1 * a2;
+			out_position = center + (voxelSizeHalf * dir[i] * s) + (voxelSizeHalf * a1) - (voxelSizeHalf * a2);
 			gl_Position = u_viewProjection * vec4(out_position, 1);
 			EmitVertex();
 
-			out_normal = vec3(s, -0.1, -0.1);
-			out_position = center + vec3(s * voxelSizeHalf.x, -voxelSizeHalf.y, -voxelSizeHalf.z);
+			out_normal = dir[i] * s - 0.1 * a1 - 0.1 * a2;
+			out_position = center + (voxelSizeHalf * dir[i] * s) - (voxelSizeHalf * a1) - (voxelSizeHalf * a2);
 			gl_Position = u_viewProjection * vec4(out_position, 1);
 			EmitVertex();
 			
-			out_normal = vec3(s, 0.1, 0.1);
-			out_position = center + vec3(s * voxelSizeHalf.x,  voxelSizeHalf.y,  voxelSizeHalf.z);
+			out_normal = dir[i] * s + 0.1 * a1 + 0.1 * a2;
+			out_position = center + (voxelSizeHalf * dir[i] * s) + (voxelSizeHalf * a1) + (voxelSizeHalf * a2);
 			gl_Position = u_viewProjection * vec4(out_position, 1);
 			EmitVertex();
 			
-			out_normal = vec3(s, -0.1, 0.1);
-			out_position = center + vec3(s * voxelSizeHalf.x, -voxelSizeHalf.y,  voxelSizeHalf.z);
+			out_normal = dir[i] * s - 0.1 * a1 + 0.1 * a2;
+			out_position = center + (voxelSizeHalf * dir[i] * s) - (voxelSizeHalf * a1) + (voxelSizeHalf * a2);
 			gl_Position = u_viewProjection * vec4(out_position, 1);
 			EmitVertex();
-			EndPrimitive();
-		//}
-	}
-	
-	// top or bottom face
-	s = getOppositeSign(viewVec.y);	
-	if (s != 0) {
-		//uvec4 v1s = texelFetch(tex_voxel, xy + ivec2(0,s), 0);
-		//if((z1Mask & v1s) == uvec4(0)) {
-			out_normal = vec3(0.1, s, -0.1);
-			out_position = center + vec3( voxelSizeHalf.x, s * voxelSizeHalf.y, -voxelSizeHalf.z);
-			gl_Position = u_viewProjection * vec4(out_position, 1);
-			EmitVertex();
-
-			out_normal = vec3(-0.1, s, -0.1);
-			out_position = center + vec3(-voxelSizeHalf.x, s * voxelSizeHalf.y, -voxelSizeHalf.z);
-			gl_Position = u_viewProjection * vec4(out_position, 1);
-			EmitVertex();
-			
-			out_normal = vec3(0.1, s, 0.1);
-			out_position = center + vec3( voxelSizeHalf.x, s * voxelSizeHalf.y,  voxelSizeHalf.z);
-			gl_Position = u_viewProjection * vec4(out_position, 1);
-			EmitVertex();
-			
-			out_normal = vec3(-0.1, s, 0.1);
-			out_position = center + vec3(-voxelSizeHalf.x, s * voxelSizeHalf.y,  voxelSizeHalf.z);
-			gl_Position = u_viewProjection * vec4(out_position, 1);
-			EmitVertex();
-			EndPrimitive();
-		//}
-	}
-	
-	// front or back face
-	s = getOppositeSign(viewVec.z);	
-	if (s != 0) {
-		//uvec4 zMask = computeSingleBitMask(z+s);
-		//if((zMask & v11) == uvec4(0)) {
-			out_normal = vec3(0.1, -0.1, s);
-			out_position = center + vec3( voxelSizeHalf.x, -voxelSizeHalf.y, s * voxelSizeHalf.z);
-			gl_Position = u_viewProjection * vec4(out_position, 1);
-			EmitVertex();
-
-			out_normal = vec3(-0.1, -0.1, s);
-			out_position = center + vec3(-voxelSizeHalf.x, -voxelSizeHalf.y, s * voxelSizeHalf.z);
-			gl_Position = u_viewProjection * vec4(out_position, 1);
-			EmitVertex();
-			
-			out_normal = vec3(0.1, 0.1, s);
-			out_position = center + vec3( voxelSizeHalf.x,  voxelSizeHalf.y, s * voxelSizeHalf.z);
-			gl_Position = u_viewProjection * vec4(out_position, 1);
-			EmitVertex();
-			
-			out_normal = vec3(-0.1, 0.1, s);
-			out_position = center + vec3(-voxelSizeHalf.x,  voxelSizeHalf.y, s * voxelSizeHalf.z);
-			gl_Position = u_viewProjection * vec4(out_position, 1);
-			EmitVertex();
-			EndPrimitive();
-		//}
+			EndPrimitive();		
+		}
 	}
 }
